@@ -1,0 +1,13 @@
+id: wrk-0001
+kind: work-item
+title: Decant the founding conversations
+intent: Move every load-bearing conclusion from the 2026-06 design conversations (CASE/RUP/Essence thread,
+  change-management brief, System Encyclopedia brief, forensics synthesis, toolbox design) into this graph
+  as nodes. This commit is the first installment.
+maturity: L1
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: decided-by
+  to: dec-0005

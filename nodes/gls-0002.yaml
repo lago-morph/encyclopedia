@@ -1,0 +1,7 @@
+id: gls-0002
+kind: glossary-term
+title: slice
+intent: A connected subset of the graph driven to high maturity together, against a whole that exists
+  at L0. Slice maturity = min over members.
+maturity: L0
+status: active

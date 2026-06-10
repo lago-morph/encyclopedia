@@ -1,0 +1,12 @@
+# Edge vocabulary. An edge type not listed here is a lint error.
+# propagation: what happens to the SOURCE-pointing dependents when the TARGET changes.
+edges:
+  serves:       {note: "traceability to a user need (jtbd); root of orphan detection", propagation: none}
+  refines:      {note: "source elaborates target at finer grain",                      propagation: needs-review}
+  supersedes:   {note: "source replaces target; target must be status=superseded",     propagation: none}
+  decided-by:   {note: "target decision shaped this node",                             propagation: needs-review}
+  references:   {note: "context only",                                                 propagation: none}
+  invalidates:  {note: "if target changes, source MUST change",                        propagation: must-change}
+  needs-review: {note: "if target changes, source might be affected",                  propagation: needs-review}
+  part-of:      {note: "composition",                                                  propagation: needs-review}
+  verifies:     {note: "source is evidence/check for target",                          propagation: must-change}

@@ -1,0 +1,13 @@
+id: com-0003
+kind: component
+title: Gate kit
+intent: 'Reusable mechanical checks installable into any managed project: clean-build-from-scratch runner,
+  hand-fix detector (live environment vs committed source diff), reference integrity. Grows only by harvesting
+  checks that caught something real.'
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: decided-by
+  to: dec-0001

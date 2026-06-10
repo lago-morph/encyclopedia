@@ -1,0 +1,10 @@
+id: wrk-0002
+kind: work-item
+title: Choose the first load project
+intent: 'Pick the first real project this graph manages. Candidates: the k8s-platform turnaround (pre-analyzed
+  gaps, emotional payoff, public story) vs a fresh small tool (lower stakes).'
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001

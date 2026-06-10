@@ -1,0 +1,9 @@
+id: dec-0006
+kind: decision
+title: Typed edges with explicit propagation policy
+intent: Generic depends-on gives false precision. The edge vocabulary distinguishes must-change (invalidates,
+  verifies), needs-review, and no-propagation (references, serves) so impact analysis returns truth, not
+  everything.
+maturity: L0
+status: adopted
+provenance: Change-management architecture brief, design decision A.

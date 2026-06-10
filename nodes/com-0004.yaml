@@ -1,0 +1,12 @@
+id: com-0004
+kind: component
+title: Dashboard renderer
+intent: Renders the computed graph state as a human-readable page (the public, collaboration-inviting
+  view). Derived only - it cannot state anything the graph does not prove.
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: needs-review
+  to: com-0002

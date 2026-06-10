@@ -1,0 +1,9 @@
+id: dec-0005
+kind: decision
+title: Vision at L0 before any slice
+intent: Capture the whole vision as cheap L0 stubs first, then drive slices up the ladder. A slice only
+  exists relative to a persistent whole; context not decanted into the graph dies with the chat session.
+maturity: L0
+status: adopted
+provenance: 'Session 2026-06-10: ''that is not a slice, that is part of an MVP where we do not even have
+  a vision for what is at the end of the road.'''

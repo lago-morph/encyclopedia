@@ -1,0 +1,7 @@
+id: gls-0003
+kind: glossary-term
+title: gate
+intent: A read-only mechanical check whose pass/fail verdict is the only thing the word done may refer
+  to. Gates never mutate what they check.
+maturity: L0
+status: active

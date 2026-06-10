@@ -1,0 +1,15 @@
+id: com-0001
+kind: component
+title: Loader + linter
+intent: 'Loads every node in nodes/ from a single glob (no assembly seam), validates envelope and kinds,
+  resolves every ref (dangling edge = fail), detects orphans via serves reachability, enforces the L1
+  ceiling rule. Read-only gate: it never mutates nodes.'
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: decided-by
+  to: dec-0001
+- type: decided-by
+  to: dec-0004

@@ -1,0 +1,12 @@
+id: com-0002
+kind: component
+title: Ladder-state computation
+intent: Computes each node's effective maturity from evidence (criteria present? passing? from clean?),
+  emitting the honest state of the graph. Self-reported maturity is input, never output.
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: part-of
+  to: com-0001

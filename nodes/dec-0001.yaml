@@ -1,0 +1,9 @@
+id: dec-0001
+kind: decision
+title: Mechanical enforcement over prose rules
+intent: All enforcement is mechanical (schema, linter, gate, computed state). Prose rules are not a control
+  mechanism.
+maturity: L0
+status: adopted
+provenance: 'k8s-platform forensics, 2026-06-10: mechanical enforcement ended every bug class it was applied
+  to; prose rules ended none; final rule violated within minutes by its author.'

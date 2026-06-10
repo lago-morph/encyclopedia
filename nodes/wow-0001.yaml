@@ -1,0 +1,21 @@
+id: wow-0001
+kind: way-of-working
+title: Operating agreement v0
+intent: The constitution for human-AI collaboration in this graph and the projects it manages.
+maturity: L0
+status: adopted
+refs:
+- type: decided-by
+  to: dec-0001
+- type: decided-by
+  to: dec-0002
+provenance: k8s-platform Round-2 turnaround (748-line rulebook replaced by ~140-line agreement + CI)
+body:
+  rules:
+  - Done is the verdict of a mechanical gate. Never a claim by human or agent.
+  - A session moves one node one rung and ends with a witnessed state transition committed to this repo.
+  - A session retro may propose at most ONE change to the toolbox.
+  - 'Admission rule: process knowledge enters as schema, check, or computed state - or it goes to a backlog
+    node, not into prose.'
+  - 'Prose budget: schema/ + this agreement <= 1000 lines total. Over budget means delete or mechanize.'
+  - Conversations end by decanting conclusions into nodes. Context that is not in the graph does not exist.

@@ -1,0 +1,11 @@
+id: dec-0004
+kind: decision
+title: The L1 ceiling rule
+intent: A node with no machine-checkable criteria cannot exceed L1, regardless of prose quality. The linter
+  may lower claimed maturity, never raise it.
+maturity: L0
+status: adopted
+refs:
+- type: decided-by
+  to: dec-0001
+provenance: Direct corollary of dec-0001; firewall against self-certified done (forensics Trap 1).

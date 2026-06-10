@@ -1,0 +1,8 @@
+id: dec-0003
+kind: decision
+title: YAML-in-git canonical; graph DB only as rebuildable projection
+intent: Flat YAML node files in git are the source of truth (diff/branch/bisect/revert for free). Any
+  graph database is a derived, rebuildable projection. Event-sourcing hybrid remains the evolution path.
+maturity: L0
+status: adopted
+provenance: Change-management architecture brief (spec/decision session), conclusions 6-7.

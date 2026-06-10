@@ -1,0 +1,7 @@
+id: gls-0001
+kind: glossary-term
+title: decant
+intent: To move conclusions from a transient context (a chat session, a meeting) into persistent graph
+  nodes. A conversation that was not decanted did not happen, as far as the system is concerned.
+maturity: L0
+status: active

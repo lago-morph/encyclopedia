@@ -1,0 +1,24 @@
+# Node envelope — fields every node file must carry.
+# A node is one YAML file in nodes/, filename = <id>.yaml.
+envelope:
+  id:        {required: true,  type: string, pattern: "^[a-z]{3}-[0-9]{4}$",
+              note: "stable and immutable; renames only via a supersedes edge from a new node"}
+  kind:      {required: true,  type: string, note: "must exist in schema/kinds.yaml"}
+  title:     {required: true,  type: string}
+  intent:    {required: true,  type: string, note: "why this node exists; one to three sentences"}
+  maturity:  {required: true,  type: string, enum: [L0, L1, L2, L3],
+              note: "claimed level; the linter may only ever LOWER it (L1 ceiling rule), never raise it"}
+  status:    {required: true,  type: string, enum: [draft, active, adopted, superseded, deprecated]}
+  refs:      {required: false, type: list, item: {type: {type: string, note: "must exist in schema/edges.yaml"},
+                                                  to:   {type: string, note: "must resolve to an existing node id"}}}
+  provenance: {required: false, type: string, note: "where this came from: conversation, forensics, ADR, paper"}
+  criteria:  {required: false, type: list, note: "machine-checkable criteria; absence caps maturity at L1",
+              item: {check: {type: string, note: "command or rule id"},
+                     kind:  {type: string, enum: [machine, human]}}}
+  body:      {required: false, type: map, note: "kind-specific content; schema grows per kind on demand"}
+
+maturity_ladder:
+  L0: {name: stub,      bar: "id + intent + at least one serves edge (kinds where serves is required)"}
+  L1: {name: sketched,  bar: "body has shape; no passing machine criteria yet"}
+  L2: {name: checkable, bar: "machine criteria exist and pass over the node and its refs closure"}
+  L3: {name: verified,  bar: "proven against reality from a clean start, repeatably (>=2 consecutive)"}

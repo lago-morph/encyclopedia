@@ -1,0 +1,12 @@
+# Node kinds. Started at six; jtbd and component were added DURING the first
+# decant because the graph demanded them (serves needs a root; vision stubs
+# need a home). That pressure-testing is the intended way this file grows.
+kinds:
+  jtbd:          {note: "a user need; root of all serves traceability", serves_required: false}
+  glossary-term: {note: "canonical definition of a term used by other nodes", serves_required: false}
+  domain-entity: {note: "a thing in the domain: attributes, identity, lifecycle, invariants", serves_required: false}
+  contract:      {note: "behavioral interface promise: pre/post/invariants/errors", serves_required: true}
+  decision:      {note: "a settled choice with rationale and provenance (ADR-equivalent)", serves_required: false}
+  work-item:     {note: "endeavor: a unit of work to do, not a part of the system", serves_required: true}
+  way-of-working: {note: "the operating agreement under which work happens; versioned, pinned", serves_required: false}
+  component:     {note: "a part of the system being built", serves_required: true}

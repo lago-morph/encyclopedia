@@ -1,0 +1,11 @@
+id: com-0005
+kind: component
+title: Lessons register
+intent: Cross-project, machine-usable register of lessons (seeded from k8s-platform ai/LESSONS.md). The
+  only place process knowledge accumulates outside schema and checks; entries cite the incident that earned
+  them.
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
