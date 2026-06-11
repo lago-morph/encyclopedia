@@ -1,0 +1,12 @@
+id: dec-0009
+kind: decision
+title: Node identity is governed by explicit rules, not author discretion
+intent: Whether an edit yields the SAME node or a NEW node (via supersedes) must be decided by explicit,
+  checkable rules; likewise node granularity. Identity churn and granularity drift are the primary rot
+  vectors in an AI-authored graph. The concrete rules are not yet designed (OPEN-QUESTIONS 6).
+maturity: L0
+status: adopted
+refs:
+- type: references
+  to: dec-0003
+provenance: Change-management architecture brief, design decision B.

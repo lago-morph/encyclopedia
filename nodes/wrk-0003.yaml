@@ -1,0 +1,14 @@
+id: wrk-0003
+kind: work-item
+title: Grow the kind taxonomy under demand
+intent: 'Admit further kinds from the SE brief only when a real node needs a home, never speculatively.
+  Candidate backlog, in rough order of expected demand: scenario (spec-by-example), expectation (consumer-driven
+  contract subset), domain attributes/value types, nfr, constraint, budget, persona, journey, interaction,
+  fixture, config-contract, reference-data, event.'
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: decided-by
+  to: dec-0002

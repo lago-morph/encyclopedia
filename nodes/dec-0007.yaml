@@ -1,0 +1,14 @@
+id: dec-0007
+kind: decision
+title: Endeavor and content live in one graph
+intent: Endeavor entities - work-items, initiatives, agent/team assignments, baselines, way-of-working
+  versions - are nodes in this same graph wearing the same envelope, not a second system beside it. A
+  baseline node references the frozen node-versions a build was cut from; team/work state is a graph query.
+  Closes SE gaps 6 and 7 in one stroke.
+maturity: L0
+status: adopted
+refs:
+- type: references
+  to: dec-0002
+provenance: 'Essence merge synthesis, session 2026-06-10/11: Essence alphas (Work, Team, Way of Working)
+  mapped onto the Encyclopedia rather than bolted beside it.'

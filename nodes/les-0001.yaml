@@ -1,0 +1,13 @@
+id: les-0001
+kind: lesson
+title: A gate must test the actual claim, not a proxy
+intent: 'Verifying write access by performing a read returned a false positive: the repo was public, so
+  any authenticated token could read it. The read proved nothing about the write grant. Test the claim
+  itself (a write), or scope the gate''s verdict to exactly what it exercised.'
+maturity: L0
+status: active
+refs:
+- type: part-of
+  to: com-0005
+provenance: 'Encyclopedia session 1, 2026-06-11: ''access verified'' on lago-morph/encyclopedia via get-ref;
+  write then failed (token lacked the repo in its access list).'

@@ -1,0 +1,14 @@
+id: dec-0008
+kind: decision
+title: Per-kind maturity criteria as state cards with typed checklist items
+intent: Each kind's L-level bars are expressed as Essence-style state cards whose checklist items are
+  typed machine (bound to a linter rule or command) or human (bound to a role). Agents drive transitions
+  whose items are all machine; human items generate review tasks scoped to blast radius. Human attention
+  goes to taste, meaning, and reality contact - never to consistency-keeping.
+maturity: L0
+status: adopted
+refs:
+- type: references
+  to: dec-0004
+provenance: Essence state cards (OMG Essence 1.2) upgraded with machine checking; fixes SE brief gap 2
+  (meta-model not machine-checkable).

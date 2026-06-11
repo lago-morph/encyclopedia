@@ -1,0 +1,13 @@
+id: ini-0003
+kind: initiative
+title: k8s-platform turnaround
+intent: 'Finish the Round-2 turnaround: implement the four decided gap fixes and reach the victory condition
+  - committed source to working platform, zero manual steps, twice consecutively. Candidate first load
+  project (wrk-0002); converts the project that taught the lessons into the first proof they work.'
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: references
+  to: wrk-0002

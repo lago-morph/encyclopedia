@@ -1,0 +1,21 @@
+id: dec-0010
+kind: decision
+title: Distributed build protocols
+intent: Adopted protocol set for multi-agent construction, pending enforcement machinery.
+maturity: L0
+status: adopted
+provenance: System Encyclopedia brief, key protocols 1-6; k8s-platform forensics seam finding (spec holes
+  live at boundaries, not middles).
+body:
+  protocols:
+  - Contracts are authored centrally and frozen before fan-out; leaf builders consume read-only and escalate
+    via decision proposal rather than improvise.
+  - Each component builds in isolation against simulators generated from frozen contracts plus its scenarios
+    and shared fixtures.
+  - Done is a mechanical conformance gate, never review.
+  - 'Walking skeleton first: one thin slice to L3 proves architecture, contracts, and toolchain compose;
+    then grow outward non-uniformly.'
+  - 'Change: blast radius via graph traversal, then automatic maturity demotion (stale verification cannot
+    silently persist), then decision gate for frozen or cross-slice radius.'
+  - Seams get the most specification attention, not the least - every standing k8s-platform blocker mapped
+    to an unspecified seam.

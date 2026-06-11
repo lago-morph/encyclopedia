@@ -1,0 +1,15 @@
+id: com-0006
+kind: component
+title: Scheduling loop
+intent: 'The factory''s engine: query the graph for nodes whose state lags their slice target, look up
+  which capability pattern advances that state, check entry conditions, dispatch to an agent. Change management
+  plugs in natively - demoted states become schedulable work. Far future; stubbed so the road exists.'
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: decided-by
+  to: dec-0007
+- type: decided-by
+  to: dec-0008

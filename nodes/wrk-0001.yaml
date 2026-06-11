@@ -3,7 +3,7 @@ kind: work-item
 title: Decant the founding conversations
 intent: Move every load-bearing conclusion from the 2026-06 design conversations (CASE/RUP/Essence thread,
   change-management brief, System Encyclopedia brief, forensics synthesis, toolbox design) into this graph
-  as nodes. This commit is the first installment.
+  as nodes.
 maturity: L1
 status: active
 refs:
@@ -11,3 +11,12 @@ refs:
   to: jtb-0001
 - type: decided-by
   to: dec-0005
+body:
+  installments:
+  - session: 1
+    commit: e2894de
+    added: kernel schema + 18 nodes
+  - session: 1
+    commit: (this)
+    added: Essence merge decisions, build protocols, identity principle, initiative stubs, lesson 1, runbook
+  remaining: audit against original briefs once loader exists; then close

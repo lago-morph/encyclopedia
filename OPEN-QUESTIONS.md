@@ -10,7 +10,9 @@ Honest list. Each gets resolved by a decision node, not by silent drift.
 3. **Expression language** for machine-checkable criteria beyond "a script
    exits 0" — the known hardest problem (see dec-0004 provenance). Deferred
    until the gate-kit slice demands it.
-4. **Per-kind state cards.** Essence-style per-kind L-level checklists are the
-   plan; only the generic ladder exists today. Grow per kind, on demand.
+4. **Per-kind state cards.** dec-0008 adopts the form (typed machine/human
+   checklist items); no card has been authored yet. Grow per kind, on demand.
 5. **serves-edge reach.** Must every node trace to a jtbd, or only certain
-   kinds? Currently enforced for: component, contract, work-item.
+   kinds? Currently enforced for: component, contract, work-item, initiative.
+6. **Concrete node-identity rules.** dec-0009 adopts the principle; the
+   actual same-node-vs-new-node tests and granularity guidance are undesigned.

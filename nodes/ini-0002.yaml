@@ -1,0 +1,11 @@
+id: ini-0002
+kind: initiative
+title: Agent OS
+intent: Runtime environments for agent fleets (Kubernetes-based, multi-repo, observable). Known to be
+  unapproachable without the complexity-management machinery this graph provides; deliberately parked
+  at L0 until the toolchain slice is real.
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001

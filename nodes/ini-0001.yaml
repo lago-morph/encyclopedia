@@ -1,0 +1,13 @@
+id: ini-0001
+kind: initiative
+title: Agentic software factory
+intent: Greenfield systems built by parallel AI agents with zero human-written code; humans author and
+  review only the model. Successor to software-factory v3/v4, rebuilt on this graph under dec-0002 (their
+  3.2MB prose corpus is the documented counterexample).
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+- type: decided-by
+  to: dec-0010
