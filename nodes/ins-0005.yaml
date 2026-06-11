@@ -1,0 +1,10 @@
+id: ins-0005
+kind: insight
+title: Meta-level work cannot be caught lying
+intent: 'k8s-platform exposed its status inflation because reality pushed back (builds failed, accounts
+  rotated). Prose specs reviewed by agent panels are self-certified homework one level up - nothing runs
+  them, so nothing falsifies them. Corollary: the project that went off the rails was the most valuable
+  of the three, because it alone touched reality and produced an empirical law.'
+maturity: L0
+status: active
+provenance: Founding session, 2026-06-10/11 (see docs/sessions/2026-06-11.md)

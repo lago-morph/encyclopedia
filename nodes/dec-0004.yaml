@@ -8,4 +8,6 @@ status: adopted
 refs:
 - type: decided-by
   to: dec-0001
+- type: references
+  to: ins-0005
 provenance: Direct corollary of dec-0001; firewall against self-certified done (forensics Trap 1).

@@ -1,0 +1,12 @@
+id: ins-0004
+kind: insight
+title: 'The recursive trap: structure generation feels like progress'
+intent: 'Agents produce structure at zero marginal cost, every failure gets metabolized into more process
+  artifacts, and the corpus buries its author. Agents are a methodologist''s amplifier hazard: they will
+  generate unlimited methodology on request, each piece locally reasonable.'
+maturity: L0
+status: active
+refs:
+- type: references
+  to: les-0001
+provenance: Founding session, 2026-06-10/11 (see docs/sessions/2026-06-11.md)

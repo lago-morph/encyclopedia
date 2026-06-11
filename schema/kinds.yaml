@@ -1,7 +1,8 @@
 # Node kinds. Started at six; jtbd and component were added DURING the first
 # decant because the graph demanded them (serves needs a root; vision stubs
-# need a home); initiative and lesson followed in installment two for the
-# same reason. That pressure-testing is the intended way this file grows.
+# need a home); initiative and lesson followed in installment two, insight and
+# plan in installment three, for the same reason. That pressure-testing is the
+# intended way this file grows.
 kinds:
   jtbd:          {note: "a user need; root of all serves traceability", serves_required: false}
   glossary-term: {note: "canonical definition of a term used by other nodes", serves_required: false}
@@ -13,3 +14,5 @@ kinds:
   component:     {note: "a part of the system being built", serves_required: true}
   initiative:    {note: "a long-horizon endeavor grouping work toward a major outcome", serves_required: true}
   lesson:        {note: "a process lesson earned from a real incident; must cite its provenance", serves_required: false}
+  insight:       {note: "a framing or diagnosis that shapes decisions; cited as rationale", serves_required: false}
+  plan:          {note: "an ordered, re-prioritizable sequence of intended work referencing graph nodes", serves_required: true}

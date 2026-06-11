@@ -7,3 +7,6 @@ maturity: L0
 status: adopted
 provenance: 'k8s-platform forensics, 2026-06-10: mechanical enforcement ended every bug class it was applied
   to; prose rules ended none; final rule violated within minutes by its author.'
+refs:
+- type: references
+  to: ins-0005

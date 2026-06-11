@@ -7,3 +7,6 @@ intent: 'Rich methodology is welcome - typed nodes, edges, ladders, state cards 
 maturity: L0
 status: adopted
 provenance: Synthesis session 2026-06-10, reconciling forensics law with methodology-first preference.
+refs:
+- type: references
+  to: ins-0006

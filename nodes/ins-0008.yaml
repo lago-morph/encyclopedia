@@ -1,0 +1,9 @@
+id: ins-0008
+kind: insight
+title: Derived views cannot lie
+intent: Legibility machinery and honesty machinery are the same artifact. Status narratives are where
+  the lying lived; a dashboard computed from the graph can state nothing the graph does not prove, which
+  makes it trustworthy to newcomers for the same reason it is trustworthy to the owner.
+maturity: L0
+status: active
+provenance: Founding session, 2026-06-10/11 (see docs/sessions/2026-06-11.md)

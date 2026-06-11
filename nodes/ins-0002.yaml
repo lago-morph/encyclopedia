@@ -1,0 +1,10 @@
+id: ins-0002
+kind: insight
+title: The maturity ladder is an entropy dial
+intent: Messiness is not eliminated; it is staged. Ambiguity is a creative resource at L0/L1 (workshop
+  grade, wrong on purpose) and a lint defect at L2+. Ambiguity is a property of the stage a piece of meaning
+  is in, not of the words. Demotion is the legitimized melting of frozen things when use teaches something
+  new.
+maturity: L0
+status: active
+provenance: Founding session, 2026-06-10/11 (see docs/sessions/2026-06-11.md)

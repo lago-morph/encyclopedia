@@ -1,0 +1,10 @@
+id: ins-0001
+kind: insight
+title: Agents removed the bottleneck that hid the complexity
+intent: Implementation speed used to pace decision-making, so human judgment was never saturated. With
+  implementation nearly free, the exposed truth is that the real work was always deciding how things fit
+  together - and the human becomes the sole, overwhelmed consistency-keeper. Machines should keep consistency;
+  humans should decide meaning, exercise taste, and touch reality.
+maturity: L0
+status: active
+provenance: Founding session, 2026-06-10/11 (see docs/sessions/2026-06-11.md)

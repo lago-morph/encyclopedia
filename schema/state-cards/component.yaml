@@ -1,0 +1,17 @@
+# State card: component. The first per-kind maturity card (dec-0008 form).
+# Item kinds: machine = bound to a linter rule id or command; human = bound to a role.
+# The linter implements the lint.* / gate.* ids; until it exists this card is L1 by its own law.
+kind: component
+levels:
+  L0:
+  - {id: lint.envelope-valid,   kind: machine, text: "envelope fields present and legal"}
+  - {id: lint.serves-resolves,  kind: machine, text: "serves edge resolves to a jtbd"}
+  L1:
+  - {id: lint.body-shape,       kind: machine, text: "body present: responsibilities + interface sketch"}
+  - {id: human.intent-coherent, kind: human, role: owner, text: "intent and scope judged coherent"}
+  L2:
+  - {id: lint.criteria-present, kind: machine, text: "machine criteria declared on the node"}
+  - {id: gate.criteria-pass,    kind: machine, text: "all machine criteria pass over the node's refs closure"}
+  L3:
+  - {id: gate.clean-verify-x2,  kind: machine, text: "verified from a clean start, twice consecutively"}
+  - {id: human.reality-contact, kind: human, role: stakeholder, text: "validated against real use, not simulation"}

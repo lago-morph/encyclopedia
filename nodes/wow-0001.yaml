@@ -9,6 +9,8 @@ refs:
   to: dec-0001
 - type: decided-by
   to: dec-0002
+- type: references
+  to: ins-0007
 provenance: k8s-platform Round-2 turnaround (748-line rulebook replaced by ~140-line agreement + CI)
 body:
   rules:

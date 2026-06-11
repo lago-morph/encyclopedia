@@ -1,0 +1,11 @@
+id: ins-0009
+kind: insight
+title: Mine the lineage; invert the failure causes
+intent: 'From RUP/RMC: the method-content vs process separation and reusable capability patterns. From
+  Essence: alphas with state checklists as machine-assessable progress, kernel vs swappable practices.
+  CASE encyclopedias (IEF, AD/Cycle) failed for two reasons - weak generators causing model/code drift,
+  and humans unable to sustain model upkeep - both inverted by AI: never hand-edit generated output, agents
+  maintain the model.'
+maturity: L0
+status: active
+provenance: Founding session, 2026-06-10/11 (see docs/sessions/2026-06-11.md)

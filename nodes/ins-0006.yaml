@@ -1,0 +1,9 @@
+id: ins-0006
+kind: insight
+title: Enacted structure survives; described structure dies
+intent: The axis that matters is not more-vs-less methodology but enacted-vs-described. RUP and Method/1
+  died as binders; their ideas survive only where they became tooling. A methodological element enters
+  this system as a schema, computed state, or gate - never as a paragraph an agent is asked to remember.
+maturity: L0
+status: active
+provenance: Founding session, 2026-06-10/11 (see docs/sessions/2026-06-11.md)

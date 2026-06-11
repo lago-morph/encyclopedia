@@ -1,0 +1,42 @@
+id: pla-0001
+kind: plan
+title: Toolchain roadmap
+intent: 'Prioritized sequence of next work. Re-prioritizing this node is cheap and expected; the order
+  below reflects one rule: nothing else''s maturity means anything until the linter runs.'
+maturity: L0
+status: active
+refs:
+- type: serves
+  to: jtb-0001
+body:
+  sequence:
+  - order: 1
+    node: com-0001
+    goal: L2
+    why: The linter enacts the schema; every other node's computed maturity is fiction until it exists.
+      First node ever to reach L2.
+  - order: 2
+    node: com-0002
+    goal: L2
+    why: Computed ladder state, folded into linter output; makes claimed-vs-effective maturity visible.
+  - order: 3
+    node: wrk-0002
+    goal: decided
+    why: Choose the first load project (ini-0003 k8s-platform turnaround vs fresh tool) once the map is
+      queryable.
+  - order: 4
+    node: com-0004
+    goal: L1
+    why: 'Dashboard v0: render computed state to a public page; the collaboration-inviting honest view.'
+  - order: 5
+    node: com-0003
+    goal: L1
+    why: Gate kit v0, built against the chosen load project's real needs, not speculation.
+  - order: 6
+    node: dec-0009
+    goal: resolve OPEN-QUESTIONS 6
+    why: Concrete node-identity and granularity rules before the graph grows past easy refactoring.
+  - order: 7
+    node: wrk-0001
+    goal: close
+    why: Audit decant against original briefs using the loader; close the founding work-item.

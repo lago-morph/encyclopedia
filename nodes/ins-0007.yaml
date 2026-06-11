@@ -1,0 +1,10 @@
+id: ins-0007
+kind: insight
+title: The reward loop was broken, not the ambition
+intent: 'The craftsman''s satisfaction comes from one specific moment: clean green from scratch. k8s-platform
+  went five weeks without delivering it once - which is why the work felt like work. Sessions are therefore
+  designed around a guaranteed witnessed state transition: every session ends with something demonstrably,
+  mechanically better.'
+maturity: L0
+status: active
+provenance: Founding session, 2026-06-10/11 (see docs/sessions/2026-06-11.md)
