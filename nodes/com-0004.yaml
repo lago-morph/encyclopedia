@@ -3,10 +3,18 @@ kind: component
 title: Dashboard renderer
 intent: Renders the computed graph state as a human-readable page (the public, collaboration-inviting
   view). Derived only - it cannot state anything the graph does not prove.
-maturity: L0
+maturity: L1
 status: active
 refs:
 - type: serves
   to: jtb-0001
 - type: needs-review
   to: com-0002
+body:
+  implementation: docs/viewer.html
+  v0: 'single-page client-side graph viewer: fetches any public repo''s nodes/*.yaml (GitHub API + raw
+    host; jsDelivr mirror fallback when API rate-limited), force-directed graph with kind=hue and maturity=luminance,
+    edge styling by propagation class, search, kind filters, detail drawer with intent/provenance/body
+    and inbound+outbound refs'
+  serving: open the file locally, or enable GitHub Pages (branch main, folder /docs) -> https://lago-morph.github.io/encyclopedia/viewer.html
+  not-yet: renders claimed maturity, not computed (needs com-0002); no plan/roadmap view; no Mermaid export

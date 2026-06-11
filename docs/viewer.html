@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>encyclopedia · graph viewer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+:root{
+  --ink:#141821; --panel:#1b212c; --panel2:#202836; --line:#2a3140;
+  --text:#d6dbe4; --muted:#8a93a3; --faint:#5a6375;
+  --accent:#e8a13d;
+  --edge-must:#d4584a; --edge-review:#c79a4a; --edge-ctx:#4a5366;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--ink);color:var(--text);font-family:var(--sans);font-size:14px;display:flex;flex-direction:column;overflow:hidden}
+button,input{font-family:inherit;font-size:inherit;color:inherit}
+
+header{display:flex;align-items:center;gap:14px;padding:10px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+header h1{font:600 15px var(--mono);letter-spacing:.06em}
+header h1 span{color:var(--accent)}
+.tagline{color:var(--faint);font-size:12px;font-style:italic}
+.repo-box{margin-left:auto;display:flex;gap:6px;align-items:center}
+.repo-box input{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:5px 9px;font-family:var(--mono);font-size:12px;width:300px;color:var(--text)}
+.repo-box button{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:5px 12px;cursor:pointer}
+.repo-box button:hover{border-color:var(--accent)}
+#status{font:12px var(--mono);color:var(--muted);min-width:160px}
+#status.err{color:var(--edge-must)}
+
+main{flex:1;display:flex;min-height:0}
+aside.rail{width:216px;border-right:1px solid var(--line);padding:12px;overflow-y:auto;flex-shrink:0}
+.rail h2{font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:14px 0 7px}
+.rail h2:first-child{margin-top:0}
+#search{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:6px 9px;font-family:var(--mono);font-size:12px;color:var(--text)}
+#search:focus{outline:1px solid var(--accent)}
+.chip{display:flex;align-items:center;gap:7px;width:100%;background:none;border:0;padding:3px 4px;border-radius:4px;cursor:pointer;font-size:12.5px;text-align:left}
+.chip:hover{background:var(--panel)}
+.chip .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chip .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip.off{opacity:.32}
+.legend{font-size:11.5px;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+.legend .row{display:flex;align-items:center;gap:8px}
+.lswatch{width:22px;flex-shrink:0;border-top-width:2px;border-top-style:solid}
+.lswatch.must{border-color:var(--edge-must)}
+.lswatch.review{border-color:var(--edge-review);border-top-style:dashed}
+.lswatch.ctx{border-color:var(--edge-ctx);border-top-style:dotted}
+.mat-row{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px}
+.mat-dot{width:11px;height:11px;border-radius:50%;background:hsl(210 45% var(--l));flex-shrink:0}
+
+#stage{flex:1;position:relative;min-width:0}
+svg{width:100%;height:100%;display:block;cursor:grab}
+svg:active{cursor:grabbing}
+.nodelabel{font:10.5px var(--mono);fill:var(--muted);pointer-events:none;user-select:none}
+#empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--faint);font-style:italic;pointer-events:none}
+
+aside.detail{width:350px;border-left:1px solid var(--line);overflow-y:auto;flex-shrink:0;display:none}
+aside.detail.open{display:block}
+.d-head{padding:14px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ink)}
+.d-id{font:600 13px var(--mono)}
+.d-title{font-size:16px;font-weight:600;margin-top:4px;line-height:1.3}
+.badges{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.badge{font:500 10.5px var(--mono);padding:2px 8px;border-radius:3px;border:1px solid var(--line);color:var(--muted)}
+.badge.mat{color:var(--ink);font-weight:600}
+.d-close{position:absolute;top:10px;right:12px;background:none;border:0;color:var(--faint);font-size:18px;cursor:pointer}
+.d-close:hover{color:var(--text)}
+.d-sec{padding:12px 16px;border-bottom:1px solid var(--line)}
+.d-sec h3{font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:7px}
+.d-sec p{font-size:13px;line-height:1.55;color:var(--text)}
+.d-sec p.prov{color:var(--muted);font-size:12px}
+.d-sec pre{font:11.5px/1.5 var(--mono);background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:10px;overflow-x:auto;white-space:pre-wrap}
+.ref{display:flex;gap:8px;align-items:baseline;padding:3px 0;font-size:12.5px}
+.ref .etype{font:11px var(--mono);color:var(--muted);min-width:86px}
+.ref a{font-family:var(--mono);font-size:12px;text-decoration:none;cursor:pointer}
+.ref a:hover{text-decoration:underline}
+.ref .rt{color:var(--faint);font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+@media (max-width:760px){
+  main{flex-direction:column}
+  aside.rail{width:100%;display:flex;gap:16px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px 12px}
+  .rail section{min-width:150px}
+  aside.detail{position:fixed;bottom:0;left:0;right:0;width:100%;max-height:55%;border-left:0;border-top:2px solid var(--accent);background:var(--ink);z-index:5}
+  .repo-box input{width:170px}
+}
+@media (prefers-reduced-motion: reduce){ svg *{transition:none!important} }
+</style>
+</head>
+<body>
+<header>
+  <h1>ENCYCLOPEDIA <span>·</span> graph viewer</h1>
+  <div class="tagline">a mostly-grey map, one bright slice at a time</div>
+  <div class="repo-box">
+    <input id="repoInput" value="lago-morph/encyclopedia@main" aria-label="owner/repo@branch">
+    <button id="loadBtn">Load graph</button>
+    <div id="status">idle</div>
+  </div>
+</header>
+<main>
+  <aside class="rail">
+    <section>
+      <h2>Search</h2>
+      <input id="search" placeholder="id or title…" aria-label="search nodes">
+      <h2>Kinds</h2>
+      <div id="kinds"></div>
+    </section>
+    <section>
+      <h2>Edges (propagation)</h2>
+      <div class="legend">
+        <div class="row"><span class="lswatch must"></span> must-change</div>
+        <div class="row"><span class="lswatch review"></span> needs-review</div>
+        <div class="row"><span class="lswatch ctx"></span> context only</div>
+      </div>
+      <h2>Maturity = light</h2>
+      <div class="legend">
+        <div class="mat-row"><span class="mat-dot" style="--l:28%"></span> L0 stub</div>
+        <div class="mat-row"><span class="mat-dot" style="--l:42%"></span> L1 sketched</div>
+        <div class="mat-row"><span class="mat-dot" style="--l:58%"></span> L2 checkable</div>
+        <div class="mat-row"><span class="mat-dot" style="--l:74%"></span> L3 verified</div>
+      </div>
+    </section>
+  </aside>
+  <div id="stage">
+    <svg id="svg" role="img" aria-label="encyclopedia node graph"></svg>
+    <div id="empty"><div>No graph loaded.</div><div style="font-size:12px">Load a public repo whose <span style="font-family:var(--mono)">nodes/*.yaml</span> wear the envelope.</div></div>
+  </div>
+  <aside class="detail" id="detail"></aside>
+</main>
+<script>
+'use strict';
+/* ---------- model ---------- */
+const KIND_HUE = { jtbd:45, component:210, contract:230, decision:280, insight:330,
+  'work-item':150, initiative:20, lesson:0, 'glossary-term':190, 'way-of-working':260,
+  plan:100, 'domain-entity':170 };
+const MAT_L = { L0:28, L1:42, L2:58, L3:74 };
+const MUST = new Set(['invalidates','verifies']);
+const REVIEW = new Set(['needs-review','refines','decided-by','part-of']);
+const hueOf = k => (k in KIND_HUE) ? KIND_HUE[k] :
+  ([...k].reduce((a,c)=>(a*31+c.charCodeAt(0))%360, 7));
+const colorOf = n => `hsl(${hueOf(n.kind)} 45% ${MAT_L[n.maturity] ?? 28}%)`;
+const edgeClass = t => MUST.has(t) ? 'must' : REVIEW.has(t) ? 'review' : 'ctx';
+const EDGE_COLOR = { must:'#d4584a', review:'#c79a4a', ctx:'#4a5366' };
+
+let nodes = [], links = [], byId = new Map(), inbound = new Map();
+let hiddenKinds = new Set(), selected = null, sim = null;
+
+/* ---------- data loading ---------- */
+const status = (m, err) => { const s = document.getElementById('status');
+  s.textContent = m; s.className = err ? 'err' : ''; };
+
+function parseTarget(){
+  const v = document.getElementById('repoInput').value.trim();
+  const m = v.match(/^([\w.-]+)\/([\w.-]+)(?:@([\w./-]+))?$/);
+  return m ? { owner:m[1], repo:m[2], branch:m[3] || 'main' } : null;
+}
+async function listPrimary(t){
+  const r = await fetch(`https://api.github.com/repos/${t.owner}/${t.repo}/git/trees/${t.branch}?recursive=1`);
+  if (!r.ok) throw new Error(`tree API ${r.status}`);
+  const d = await r.json();
+  return { paths: d.tree.filter(e => e.type==='blob' && /^nodes\/.+\.ya?ml$/.test(e.path)).map(e => e.path),
+           raw: p => `https://raw.githubusercontent.com/${t.owner}/${t.repo}/${t.branch}/${p}`,
+           mirror: false };
+}
+async function listMirror(t){
+  const r = await fetch(`https://data.jsdelivr.com/v1/packages/gh/${t.owner}/${t.repo}@${t.branch}?structure=flat`);
+  if (!r.ok) throw new Error(`mirror ${r.status}`);
+  const d = await r.json();
+  return { paths: d.files.map(f => f.name.replace(/^\//,'')).filter(p => /^nodes\/.+\.ya?ml$/.test(p)),
+           raw: p => `https://cdn.jsdelivr.net/gh/${t.owner}/${t.repo}@${t.branch}/${p}`,
+           mirror: true };
+}
+async function loadGraph(){
+  const t = parseTarget();
+  if (!t) { status('use owner/repo@branch', true); return; }
+  status('listing…');
+  let src;
+  try { src = await listPrimary(t); }
+  catch (e) {
+    status('API limited — trying mirror…');
+    try { src = await listMirror(t); }
+    catch (e2) { status(`load failed: ${e.message}; ${e2.message}`, true); return; }
+  }
+  status(`fetching ${src.paths.length} nodes…`);
+  const results = await Promise.allSettled(src.paths.map(async p => {
+    const r = await fetch(src.raw(p));
+    if (!r.ok) throw new Error(`${p}: ${r.status}`);
+    return jsyaml.load(await r.text());
+  }));
+  const ok = [], bad = [];
+  results.forEach((r,i) => r.status==='fulfilled' && r.value && r.value.id
+    ? ok.push(r.value) : bad.push(src.paths[i]));
+  if (!ok.length) { status('no parseable nodes found', true); return; }
+  buildModel(ok);
+  status(`${ok.length} nodes · ${links.length} edges` +
+    (bad.length ? ` · ${bad.length} unreadable` : '') + (src.mirror ? ' · cached mirror' : ''),
+    bad.length > 0);
+  document.getElementById('empty').style.display = 'none';
+  renderKinds(); render(); closeDetail();
+}
+function buildModel(list){
+  nodes = list; byId = new Map(nodes.map(n => [n.id, n]));
+  links = []; inbound = new Map();
+  for (const n of nodes) for (const r of (n.refs || [])){
+    if (!byId.has(r.to)) continue;            // dangling: linter's problem, not the viewer's
+    links.push({ source:n.id, target:r.to, type:r.type, cls:edgeClass(r.type) });
+    (inbound.get(r.to) ?? inbound.set(r.to, []).get(r.to)).push({ from:n.id, type:r.type });
+  }
+  hiddenKinds.clear();
+}
+
+/* ---------- left rail ---------- */
+function renderKinds(){
+  const counts = {};
+  nodes.forEach(n => counts[n.kind] = (counts[n.kind]||0)+1);
+  const box = document.getElementById('kinds'); box.innerHTML = '';
+  Object.keys(counts).sort().forEach(k => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (hiddenKinds.has(k) ? ' off' : '');
+    b.innerHTML = `<span class="dot" style="background:hsl(${hueOf(k)} 45% 55%)"></span>
+      <span>${k}</span><span class="n">${counts[k]}</span>`;
+    b.onclick = () => { hiddenKinds.has(k) ? hiddenKinds.delete(k) : hiddenKinds.add(k);
+      renderKinds(); render(); };
+    box.appendChild(b);
+  });
+}
+
+/* ---------- graph rendering ---------- */
+const svg = d3.select('#svg');
+const root = svg.append('g');
+svg.call(d3.zoom().scaleExtent([0.15, 4]).on('zoom', e => root.attr('transform', e.transform)));
+const defs = svg.append('defs');
+for (const [cls, col] of Object.entries(EDGE_COLOR))
+  defs.append('marker').attr('id','arr-'+cls).attr('viewBox','0 -4 8 8')
+    .attr('refX', 13).attr('markerWidth', 6).attr('markerHeight', 6).attr('orient','auto')
+    .append('path').attr('d','M0,-3.5L8,0L0,3.5').attr('fill', col);
+
+function visible(){
+  const vn = nodes.filter(n => !hiddenKinds.has(n.kind));
+  const ids = new Set(vn.map(n => n.id));
+  return { vn, vl: links.filter(l => ids.has(l.source.id ?? l.source) && ids.has(l.target.id ?? l.target)) };
+}
+function render(){
+  const { vn, vl } = visible();
+  const W = document.getElementById('stage').clientWidth,
+        H = document.getElementById('stage').clientHeight;
+  root.selectAll('*').remove();
+  if (sim) sim.stop();
+
+  const link = root.append('g').selectAll('line').data(vl).join('line')
+    .attr('stroke', d => EDGE_COLOR[d.cls]).attr('stroke-width', 1.2)
+    .attr('stroke-dasharray', d => d.cls==='review' ? '5 4' : d.cls==='ctx' ? '1.5 3.5' : null)
+    .attr('marker-end', d => `url(#arr-${d.cls})`).attr('opacity', .75);
+
+  const deg = {}; vl.forEach(l => { const s = l.source.id ?? l.source, t = l.target.id ?? l.target;
+    deg[s]=(deg[s]||0)+1; deg[t]=(deg[t]||0)+1; });
+  const R = n => 7 + Math.min(9, 1.6*Math.sqrt(deg[n.id]||0));
+
+  const node = root.append('g').selectAll('circle').data(vn, d => d.id).join('circle')
+    .attr('r', R)
+    .attr('fill', colorOf)
+    .attr('stroke', d => d.maturity==='L3' ? '#fff' : d.maturity==='L2' ? 'hsl('+hueOf(d.kind)+' 70% 80%)' : 'var(--line)')
+    .attr('stroke-width', d => d.maturity==='L3' ? 2 : d.maturity==='L2' ? 1.6 : 1)
+    .attr('opacity', d => (d.status==='superseded'||d.status==='deprecated') ? .35 : 1)
+    .style('cursor','pointer')
+    .on('click', (e,d) => openDetail(d.id))
+    .call(d3.drag()
+      .on('start', (e,d) => { if(!e.active) sim.alphaTarget(.25).restart(); d.fx=d.x; d.fy=d.y; })
+      .on('drag', (e,d) => { d.fx=e.x; d.fy=e.y; })
+      .on('end',  (e,d) => { if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }));
+  node.append('title').text(d => `${d.id} · ${d.title} [${d.maturity}]`);
+
+  const label = root.append('g').selectAll('text').data(vn, d => d.id).join('text')
+    .attr('class','nodelabel').attr('dy', d => -R(d)-4).attr('text-anchor','middle')
+    .text(d => d.id);
+
+  sim = d3.forceSimulation(vn)
+    .force('link', d3.forceLink(vl).id(d => d.id).distance(86).strength(.5))
+    .force('charge', d3.forceManyBody().strength(-260))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collide', d3.forceCollide().radius(d => R(d)+10))
+    .on('tick', () => {
+      link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+          .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+      node.attr('cx',d=>d.x).attr('cy',d=>d.y);
+      label.attr('x',d=>d.x).attr('y',d=>d.y);
+    });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches){
+    sim.stop(); for (let i=0;i<260;i++) sim.tick();
+    sim.on('tick')(); // paint final positions once
+  }
+  applySearch();
+}
+
+/* ---------- search ---------- */
+function applySearch(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  root.selectAll('circle').attr('filter', null)
+    .attr('opacity', d => {
+      const base = (d.status==='superseded'||d.status==='deprecated') ? .35 : 1;
+      if (!q) return base;
+      const hit = d.id.toLowerCase().includes(q) || (d.title||'').toLowerCase().includes(q);
+      return hit ? base : .12;
+    });
+  root.selectAll('.nodelabel').attr('opacity', d => {
+    if (!q) return 1;
+    return (d.id.toLowerCase().includes(q) || (d.title||'').toLowerCase().includes(q)) ? 1 : .1;
+  });
+}
+document.getElementById('search').addEventListener('input', applySearch);
+
+/* ---------- detail drawer ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function refRow(type, id){
+  const t = byId.get(id);
+  return `<div class="ref"><span class="etype">${esc(type)}</span>
+    <a style="color:hsl(${hueOf(t.kind)} 60% 65%)" onclick="openDetail('${esc(id)}')">${esc(id)}</a>
+    <span class="rt">${esc(t.title||'')}</span></div>`;
+}
+function openDetail(id){
+  selected = id;
+  const n = byId.get(id); if (!n) return;
+  const out = (n.refs||[]).filter(r => byId.has(r.to));
+  const inn = inbound.get(id) || [];
+  const body = n.body ? `<div class="d-sec"><h3>Body</h3><pre>${esc(jsyaml.dump(n.body))}</pre></div>` : '';
+  const prov = n.provenance ? `<div class="d-sec"><h3>Provenance</h3><p class="prov">${esc(n.provenance)}</p></div>` : '';
+  const el = document.getElementById('detail');
+  el.className = 'detail open';
+  el.innerHTML = `
+    <div class="d-head">
+      <button class="d-close" onclick="closeDetail()" aria-label="close">×</button>
+      <div class="d-id" style="color:hsl(${hueOf(n.kind)} 60% 65%)">${esc(n.id)}</div>
+      <div class="d-title">${esc(n.title||'')}</div>
+      <div class="badges">
+        <span class="badge">${esc(n.kind)}</span>
+        <span class="badge mat" style="background:${colorOf(n)}">${esc(n.maturity||'?')}</span>
+        <span class="badge">${esc(n.status||'?')}</span>
+      </div>
+    </div>
+    <div class="d-sec"><h3>Intent</h3><p>${esc(n.intent||'')}</p></div>
+    ${prov}${body}
+    <div class="d-sec"><h3>Outbound · ${out.length}</h3>${out.map(r => refRow(r.type, r.to)).join('') || '<p class="prov">none</p>'}</div>
+    <div class="d-sec"><h3>Inbound · ${inn.length}</h3>${inn.map(r => refRow(r.type, r.from)).join('') || '<p class="prov">none</p>'}</div>`;
+  root.selectAll('circle').attr('stroke', d => d.id===id ? 'var(--accent)' :
+      d.maturity==='L3' ? '#fff' : d.maturity==='L2' ? 'hsl('+hueOf(d.kind)+' 70% 80%)' : 'var(--line)')
+    .attr('stroke-width', d => d.id===id ? 2.6 : d.maturity==='L3' ? 2 : d.maturity==='L2' ? 1.6 : 1);
+}
+function closeDetail(){
+  selected = null;
+  document.getElementById('detail').className = 'detail';
+  if (nodes.length) root.selectAll('circle')
+    .attr('stroke', d => d.maturity==='L3' ? '#fff' : d.maturity==='L2' ? 'hsl('+hueOf(d.kind)+' 70% 80%)' : 'var(--line)')
+    .attr('stroke-width', d => d.maturity==='L3' ? 2 : d.maturity==='L2' ? 1.6 : 1);
+}
+window.openDetail = openDetail; window.closeDetail = closeDetail;
+
+/* ---------- boot ---------- */
+document.getElementById('loadBtn').onclick = loadGraph;
+document.getElementById('repoInput').addEventListener('keydown', e => { if (e.key==='Enter') loadGraph(); });
+const qp = new URLSearchParams(location.search).get('repo');
+if (qp) document.getElementById('repoInput').value = qp;
+loadGraph();
+window.addEventListener('resize', () => { if (nodes.length) render(); });
+</script>
+</body>
+</html>
